@@ -1,6 +1,6 @@
 import { Model, IReport } from '../src/model';
-import moment from 'moment';
-import _ from 'lodash';
+import * as moment from 'moment';
+import * as _ from 'lodash';
 
 test('Should initialize', () => {
   const model = new Model<number>(
