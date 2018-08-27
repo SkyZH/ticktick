@@ -1,9 +1,9 @@
 {
-  "name": "ticktick",
-  "version": "1.0.0",
-  "description": "ticktick",
+  "name": "@skyzh/tick",
+  "version": "1.0.1",
+  "description": "A simple library to provide hourly, daily summary of your data.",
   "license": "MIT",
-  "repository": "",
+  "repository": "git@github.com:SkyZH/ticktick.git",
   "author": {
     "name": "Sky Zhang",
     "email": "iskyzh@gmail.com",
@@ -63,5 +63,8 @@
       "js"
     ],
     "testEnvironment": "node"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
