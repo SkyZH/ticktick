@@ -6,7 +6,7 @@ script:
 after_script:
 - cat coverage/lcov.info | ./node_modules/.bin/coveralls
 before_script:
-- yarn global add rimraf
+- yarn global add rimraf prettier
 before_install:
 - export TZ=Asia/Shanghai
 - date

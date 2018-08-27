@@ -6,7 +6,7 @@
     "lib": [
       "esnext"
     ],
-    "target": "es2015",
+    "target": "es6",
     "strict": true,
     "outDir": "./lib",
     "preserveConstEnums": true,
@@ -14,8 +14,7 @@
     "inlineSourceMap": true,
     "typeRoots": [
       "./node_modules/@types"
-    ],
-    "allowSyntheticDefaultImports": true
+    ]
   },
   "include": [
     "src/**/*"
