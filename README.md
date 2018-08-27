@@ -1,6 +1,6 @@
 # Ticktick
 
-[![Build Status](https://travis-ci.org/SkyZH/ticktick.svg?branch=master)](https://travis-ci.org/{{github-user-name}}/{{github-app-name}}.svg?branch=master)
+[![Build Status](https://travis-ci.com/SkyZH/ticktick.svg?branch=master)](https://travis-ci.com/SkyZH/ticktick?branch=master)
 [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)
 
 
