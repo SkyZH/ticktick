@@ -30,6 +30,12 @@
   dependencies:
     moment "^2.18.1"
 
+"@types/moment-timezone@^0.5.8":
+  version "0.5.8"
+  resolved "https://registry.yarnpkg.com/@types/moment-timezone/-/moment-timezone-0.5.8.tgz#92aba9bc238cabf69a27a1a4f52e0ebb8f10f896"
+  dependencies:
+    moment ">=2.14.0"
+
 "@types/node@^8.0.0":
   version "8.10.28"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-8.10.28.tgz#03bf70dd7f1de7826251331ce57beddf7f9dd253"
@@ -51,16 +57,6 @@ acorn-globals@^4.1.0:
 acorn@^5.0.0, acorn@^5.5.3:
   version "5.7.2"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-5.7.2.tgz#91fa871883485d06708800318404e72bfb26dcc5"
-
-aigle-core@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/aigle-core/-/aigle-core-1.0.0.tgz#4066e0f9a5c60996d8377ed196a21fa17b6250ab"
-
-aigle@^1.12.0:
-  version "1.12.0"
-  resolved "https://registry.yarnpkg.com/aigle/-/aigle-1.12.0.tgz#8012cd513800af98f0831fb5af99d6006f92a2bd"
-  dependencies:
-    aigle-core "^1.0.0"
 
 ajv@^5.3.0:
   version "5.5.2"
@@ -2324,7 +2320,13 @@ moment-range@^4.0.1:
   dependencies:
     es6-symbol "^3.1.0"
 
-moment@^2.18.1, moment@^2.22.2:
+moment-timezone@^0.5.21:
+  version "0.5.21"
+  resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.5.21.tgz#3cba247d84492174dbf71de2a9848fa13207b845"
+  dependencies:
+    moment ">= 2.9.0"
+
+"moment@>= 2.9.0", moment@>=2.14.0, moment@^2.18.1, moment@^2.22.2:
   version "2.22.2"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.22.2.tgz#3c257f9839fc0e93ff53149632239eb90783ff66"
 
