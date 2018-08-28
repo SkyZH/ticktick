@@ -7,17 +7,15 @@ after_script:
 before_install:
 - export TZ=Asia/Shanghai
 - date
-before_deploy:
-    - yarn install
 deploy:
   provider: npm
   email: iskyzh@gmail.com
   api_key:
-    secure: c+HipJCJKhjQG6ty1dGSINGwmKA9MR01d6s0fZXpCs5nVfLfH68XNHVKZQu8GPp4zmzgAZwIr5tyx61xUs8tL1Z02+gHRT9IO92zngdCcAunC6+z53TOP6/mzYMtdHDX4nO9axIgdUqJ4DN3H59NQAPMsztFCEbOokGcpr4a0Iu5URYXqxPObhRwYug15ylBoMCOfrmgiv0SpIeS+E3hww2g7VGRrt3WBXvl/JTnxS1wZmxMfxOgTvYaO/zi7VyKEIhVifY6TA2/1ALf41Xo6MsCvDw+9wXv1QVxXCglEL5o48wUdLoXE6zj9kLCzWm/khV8hEMJ9CaA/DT9yZRJELC9KTi97114AqcoHiU+YEG6poV1OEiUFi/KHtcutTA218uZ1D9X8BxNbFtoB5uIZ+ZtRh9vdIaO1HKa470xvSmrKNzPeQxwQSqtSOHrqscCNiB/8Hu8DeWTIIKfMzZEBcpzcfDjQ+MohMk/BIxo65E6rCnJUJ2xzQDJXE9AGSNYa4Vsgk8hK2RcFTd0sdSY1uJ4A73960s0hxvgPl1YHMPy/QcGC46GG5LfNVDzB9smZzJUB+B5+LkAmzy5pL800ATl23QGNXgnld20v1yQ/Lg+F6jNLgbP3UN41hLY2d/50189z7HtlEGvjO/gADX8x8YiV5MnDZZXsZKy8FMZTeE=
+    secure: KF5l8gpU8VO0biV7JShl/mKgDonpQFMuIuJpjkRhOIzLNREScW9lXacMxaqUU8YVEvsqBGqNZfkCE9nc+0qzr7QVRkfoq+t2M1QmOk0ouNJrdN3UWXJjyHsduxr/IwsAUSXJEZMIRspDMh/+E2Hj86ndT1GDz9wJ5A6+//FPcMgXRcAroEiFvMVKkDwWHa+d/g8IxeoSbQZdDetZRE1tSpnO5JM2DILmMhT71b6sRDHUZTrpNJG72gV9c/bCAqFJLcSiNR59a7MS6fhlcDgQo2g2oqez61Rks3fS+DLZ4AJhqr4Zt44Xqw0qx0HNiDWcS/pm/IVmzVd3MEHDRvffga5SZR9nY7H5ZOpAwLwdK6SZsEx/6MpbvNZ7ecS3qNsKMlxsPzhNWmy1df9Gc4cGBhfKuO1hRmUWWjf8TVWQRkYADEfv9xZdG2go4FTd3rufu7qbIh2wBb604Lc0AGKiwWMCtRjFzXBgcUb0CclUIDtXihPNs8wJ28Hki3g0LiXRaI6nh0ZFtWSB3+Q7Fdpybf+GRUM84uKPM/IpPEKKJ0HyqdC1ToW65W5c4h2DCZVcs1/lLzIhjFGDwLRXbuZNbozphKG32xpAqJP3bUKmuVLhpCYtRsLfn7PlfM24R5G05iNHwZdGTAZNFNY+u5A3OFViK3vykAblL+ZdSO5SBug=
   on:
     repo: SkyZH/ticktick
   skip_cleanup: true
 cache:
   yarn: true
   directories:
-    - node_modules
+  - node_modules
