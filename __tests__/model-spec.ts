@@ -23,26 +23,50 @@ test('Should report realtime', async () => {
 });
 
 test('Should access querier', async () => {
-  let called = false;
+  let called = 0;
   const model = new Model<number>(
     'test',
     d => _.sum(d),
     (table, id) => {
-      called = true;
+      called += 1;
       return Promise.resolve(0);
     }
   );
-  const reports = await model.report(233, moment(Date.now()));
-  expect(called).toBe(true);
+  await model.report(233, moment('2018/08/01 09:00:00'));
+  called = 0;
+  await model.report(233, moment('2018/08/01 09:01:00'));
+  expect(called).toBe(60);
 });
 
+test('Should not summarize', async () => {
+  const model = new Model<number>(
+    'test',
+    d => _.sum(d),
+    (table, id) => Promise.resolve(0)
+  );
+  await model.report(233, moment('2018/08/01 09:00:01'));
+  await model.report(233, moment('2018/08/01 09:00:02'));
+  expect(model.requireSummary('minute', moment('2018/08/01 08:59:00'))).toBe(
+    false
+  );
+  expect(model.requireSummary('minute', moment('2018/08/01 09:00:00'))).toBe(
+    true
+  );
+  expect(model.requireSummary('minute', moment('2018/08/01 09:30:00'))).toBe(
+    true
+  );
+  expect(model.requireSummary('hour', moment('2018/08/01 09:00:00'))).toBe(
+    true
+  );
+});
 test('Should report various forms of data', async () => {
   const model = new Model<number>(
     'test',
     d => _.sum(d),
     (table, id) => Promise.resolve(0)
   );
-  const reports = await model.report(233, moment(Date.now()));
+  await model.report(233, moment('2018/08/01 09:00:00'));
+  const reports = await model.report(233, moment('2018/08/01 10:00:00'));
   expect(reports[0].data).toBe(233);
   expect(reports[1].data).toBe(233);
 });
@@ -59,7 +83,7 @@ test('Should have sum when first reported and not reject', async () => {
   const reports = await model.report(233, moment(Date.now()));
 });
 
-test('Should report correct data in timezone', async () => {
+test('Should report correct data', async () => {
   const data: any = {};
   const model = new Model<string>(
     'test',
@@ -73,33 +97,37 @@ test('Should report correct data in timezone', async () => {
       }
       data[v.table][v.id] = v.data;
     });
-  pushData(await model.report('1', moment('2018/08/01 09:01:00')));
-  pushData(await model.report('2', moment('2018/07/03 10:03:04')));
+  pushData(await model.report('1', moment('2018/07/03 10:03:04')));
+  pushData(await model.report('2', moment('2018/08/01 09:01:00')));
   pushData(await model.report('3', moment('2018/08/01 09:01:01')));
   pushData(await model.report('4', moment('2018/08/01 09:02:01')));
   pushData(await model.report('5', moment('2018/08/01 09:20:03')));
   pushData(await model.report('6', moment('2018/08/01 10:01:02')));
   pushData(await model.report('7', moment('2018/08/02 10:02:03')));
   expect(data).toMatchObject({
-    day: { '1530547200': '2', '1533052800': '1,3,4,5,6', '1533139200': '7' },
+    day: {
+      '1530460800': '1',
+      '1532966400': '2',
+      '1533052800': '2,2,2,3,4,5,6,7',
+    },
     hour: {
-      '1530583200': '2',
-      '1533085200': '1,3,4,5',
-      '1533088800': '6',
-      '1533175200': '7',
+      '1530579600': '1',
+      '1533081600': '2',
+      '1533085200': '2,2,3,4,5,6',
+      '1533171600': '7',
     },
     minute: {
-      '1530583380': '2',
-      '1533085260': '1,3',
-      '1533085320': '4',
-      '1533086400': '5',
-      '1533088860': '6',
-      '1533175320': '7',
+      '1530583320': '1',
+      '1533085200': '2',
+      '1533085260': '2,3,4',
+      '1533086340': '5',
+      '1533088800': '6',
+      '1533175260': '7',
     },
-    month: { '1530374400': '2', '1533052800': '1,3,4,5,6,7' },
+    month: { '1527782400': '1', '1530374400': '1,2' },
     second: {
-      '1530583384': '2',
-      '1533085260': '1',
+      '1530583384': '1',
+      '1533085260': '2',
       '1533085261': '3',
       '1533085321': '4',
       '1533086403': '5',
