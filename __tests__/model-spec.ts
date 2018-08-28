@@ -88,7 +88,13 @@ test('Should report correct data', async () => {
   const model = new Model<string>(
     'test',
     d => d.join(','),
-    (table, id) => Promise.resolve(data && data[table] && data[table][id])
+    (table, id) => Promise.resolve(data && data[table] && data[table][id]),
+    {
+      day: moment('2018/06/01 0:00:00'),
+      hour: moment('2018/06/01 0:00:00'),
+      minute: moment('2018/06/01 0:00:00'),
+      month: moment('2018/06/01 0:00:00'),
+    }
   );
   const pushData = (result: Array<IReport<string>>) =>
     result.forEach(v => {
@@ -101,8 +107,21 @@ test('Should report correct data', async () => {
   pushData(await model.report('2', moment('2018/08/01 09:01:00')));
   pushData(await model.report('3', moment('2018/08/01 09:01:01')));
   pushData(await model.report('4', moment('2018/08/01 09:02:01')));
-  pushData(await model.report('5', moment('2018/08/01 09:20:03')));
+  pushData(await model.report('5', moment('2018/08/01 09:03:03')));
   pushData(await model.report('6', moment('2018/08/01 10:01:02')));
   pushData(await model.report('7', moment('2018/08/02 10:02:03')));
-  expect(data).toMatchObject({"day": {"1532966400": "", "1533052800": ",,2,3,"}, "hour": {"1533081600": "", "1533085200":",2,3,", "1533171600": ""}, "minute": {"1533085200": "", "1533085260": "2,3", "1533086340": "", "1533088800": "", "1533175260": ""}, "month": {"1530374400": ""}, "second": {"1530583384": "1", "1533085260": "2", "1533085261": "3", "1533085321": "4", "1533086403": "5", "1533088862": "6", "1533175323": "7"}});
+  expect(data).toMatchObject({
+    day: { '1533052800': '2,3,4' },
+    hour: { '1533085200': '2,3,4' },
+    minute: { '1533085260': '2,3', '1533085320': '4' },
+    second: {
+      '1530583384': '1',
+      '1533085260': '2',
+      '1533085261': '3',
+      '1533085321': '4',
+      '1533085383': '5',
+      '1533088862': '6',
+      '1533175323': '7',
+    },
+  });
 });

@@ -61,18 +61,21 @@ export class Model<T> {
     if (!(unit in this.latestReport!)) {
       this.latestReport![unit] = moment(start);
       return null;
-    } else if (!this.requireSummary(unit, start)) {
+    }
+    if (!this.requireSummary(unit, start)) {
       return null;
     }
     const parentUnit = SUMMARY_FROM[unit] as Moment.unitOfTime.Base;
     const end = moment(start).endOf(unit);
     const range = moment.range(start, end);
     const allDate = Array.from(range.by(parentUnit));
-    const allData = await Promise.all(
+    const allData = (await Promise.all(
       allDate.map(d => this.querier(parentUnit, `${d.unix()}`))
-    );
-    const summurizedData = this.summurizer(allData
-      .filter(d => !_.isNull(d) && !_.isUndefined(d)) as T[]);
+    )).filter(d => !_.isNull(d) && !_.isUndefined(d)) as T[];
+    if (allData.length === 0) {
+      return null;
+    }
+    const summurizedData = this.summurizer(allData);
     this.latestReport![unit] = start;
     return {
       data: summurizedData,
