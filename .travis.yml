@@ -7,6 +7,8 @@ after_script:
 before_install:
 - export TZ=Asia/Shanghai
 - date
+before_deploy:
+    - export PATH=$PATH:./node_modules/.bin
 deploy:
   provider: npm
   email: iskyzh@gmail.com
