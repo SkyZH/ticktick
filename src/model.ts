@@ -42,7 +42,7 @@ export class Model<T> {
     };
     return [secondData].concat((await Promise.all(
       _.map(TABLE_MAP, (unit: Moment.unitOfTime.Base) =>
-        this.summary(unit, secondData, moment(mForTime).subtract(unit, 1))
+        this.summary(unit, moment(mForTime).subtract(unit, 1))
       )
     )).filter(d => d != null) as Array<IReport<T>>);
   }
@@ -55,12 +55,12 @@ export class Model<T> {
   }
   private async summary(
     unit: Moment.unitOfTime.Base,
-    latest: IReport<T>,
     forTime: Moment.Moment
   ): Promise<IReport<T> | null> {
     const start = moment(forTime).startOf(unit);
     if (!(unit in this.latestReport!)) {
-      this.latestReport![unit] = moment(start).subtract(unit, 1);
+      this.latestReport![unit] = moment(start);
+      return null;
     } else if (!this.requireSummary(unit, start)) {
       return null;
     }
@@ -72,7 +72,6 @@ export class Model<T> {
       allDate.map(d => this.querier(parentUnit, `${d.unix()}`))
     );
     const summurizedData = this.summurizer(allData
-      .concat([latest.data])
       .filter(d => !_.isNull(d) && !_.isUndefined(d)) as T[]);
     this.latestReport![unit] = start;
     return {

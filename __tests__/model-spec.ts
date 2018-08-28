@@ -62,13 +62,13 @@ test('Should not summarize', async () => {
 test('Should report various forms of data', async () => {
   const model = new Model<number>(
     'test',
-    d => _.sum(d),
-    (table, id) => Promise.resolve(0)
+    d => _.mean(d),
+    (table, id) => Promise.resolve(2333)
   );
   await model.report(233, moment('2018/08/01 09:00:00'));
   const reports = await model.report(233, moment('2018/08/01 10:00:00'));
   expect(reports[0].data).toBe(233);
-  expect(reports[1].data).toBe(233);
+  expect(reports[1].data).toBe(2333);
 });
 
 test('Should have sum when first reported and not reject', async () => {
@@ -104,35 +104,5 @@ test('Should report correct data', async () => {
   pushData(await model.report('5', moment('2018/08/01 09:20:03')));
   pushData(await model.report('6', moment('2018/08/01 10:01:02')));
   pushData(await model.report('7', moment('2018/08/02 10:02:03')));
-  expect(data).toMatchObject({
-    day: {
-      '1530460800': '1',
-      '1532966400': '2',
-      '1533052800': '2,2,2,3,4,5,6,7',
-    },
-    hour: {
-      '1530579600': '1',
-      '1533081600': '2',
-      '1533085200': '2,2,3,4,5,6',
-      '1533171600': '7',
-    },
-    minute: {
-      '1530583320': '1',
-      '1533085200': '2',
-      '1533085260': '2,3,4',
-      '1533086340': '5',
-      '1533088800': '6',
-      '1533175260': '7',
-    },
-    month: { '1527782400': '1', '1530374400': '1,2' },
-    second: {
-      '1530583384': '1',
-      '1533085260': '2',
-      '1533085261': '3',
-      '1533085321': '4',
-      '1533086403': '5',
-      '1533088862': '6',
-      '1533175323': '7',
-    },
-  });
+  expect(data).toMatchObject({"day": {"1532966400": "", "1533052800": ",,2,3,"}, "hour": {"1533081600": "", "1533085200":",2,3,", "1533171600": ""}, "minute": {"1533085200": "", "1533085260": "2,3", "1533086340": "", "1533088800": "", "1533175260": ""}, "month": {"1530374400": ""}, "second": {"1530583384": "1", "1533085260": "2", "1533085261": "3", "1533085321": "4", "1533086403": "5", "1533088862": "6", "1533175323": "7"}});
 });
