@@ -42,7 +42,7 @@ export class Model<T> {
     };
     return [secondData].concat((await Promise.all(
       _.map(TABLE_MAP, (unit: Moment.unitOfTime.Base) =>
-        this.summary(unit, moment(mForTime).subtract(unit, 1))
+        this.summary(unit, moment(mForTime).subtract(1, unit))
       )
     )).filter(d => d != null) as Array<IReport<T>>);
   }
@@ -72,11 +72,11 @@ export class Model<T> {
     const allData = (await Promise.all(
       allDate.map(d => this.querier(parentUnit, `${d.unix()}`))
     )).filter(d => !_.isNull(d) && !_.isUndefined(d)) as T[];
-    if (allData.length === 0) {
+    this.latestReport![unit] = moment(start);
+    if (_.size(allData) === 0) {
       return null;
     }
     const summurizedData = this.summurizer(allData);
-    this.latestReport![unit] = start;
     return {
       data: summurizedData,
       id: `${start.unix()}`,

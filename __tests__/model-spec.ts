@@ -28,13 +28,17 @@ test('Should access querier', async () => {
     'test',
     d => _.sum(d),
     (table, id) => {
-      called += 1;
-      return Promise.resolve(0);
+      return new Promise((resolve, reject) => {
+        resolve(0);
+        called++;
+      });
     }
   );
-  await model.report(233, moment('2018/08/01 09:00:00'));
+  await model.report(233, moment('2018/08/01 09:00:01'));
   called = 0;
   await model.report(233, moment('2018/08/01 09:01:00'));
+  await model.report(233, moment('2018/08/01 09:01:03'));
+  await model.report(233, moment('2018/08/01 09:01:06'));
   expect(called).toBe(60);
 });
 
